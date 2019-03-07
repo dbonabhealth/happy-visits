@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+
+import { HomePage } from './pages/Home/HomePage';
+import { SignIn } from './pages/Account/LoginPage';
+import { VisitsPage } from './pages/Visits/VisitsPage';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <span>
-            Hello World!
-          </span>
-        </header>
-      </div>
+      <Switch>
+        <Route path="/login" component={SignIn} exact />
+        <Route path="/visits" component={VisitsPage} exact />
+        <Route path="/" component={HomePage} exact />
+      </Switch>
     );
   }
 }
