@@ -5,11 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import configureStore from './redux/createStore';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { StoreContext } from "redux-react-hook";
+
+const store = configureStore();
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={configureStore()}>
-      <App />
+    <Provider store={store}>
+      <StoreContext.Provider value={store}>
+        <App />
+      </StoreContext.Provider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'));

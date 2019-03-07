@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {useDispatch} from 'redux-react-hook';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +15,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+import { login } from '../../redux/modules/auth/auth.middleware';
 
 const styles = theme => ({
   main: {
@@ -45,9 +50,23 @@ const styles = theme => ({
   },
 });
 
+
 function SignInPage(props) {
   const { classes } = props;
-
+  
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  
+  // Create actions
+  const dispatch = useDispatch();
+  const handleSubmit = useCallback(
+    () => {
+      debugger;
+      dispatch(login({
+        username,
+        password,
+      }));
+    });
   return (
     <main className={classes.main}>
       <CssBaseline />
@@ -58,14 +77,19 @@ function SignInPage(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <InputLabel htmlFor="username">User Name</InputLabel>
+            <Input id="username" name="username"
+              autoFocus
+              value={username}
+              onChange={e => setUserName(e.target.value)}
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" type="password" id="password" autoComplete="current-password" value={password}
+              onChange={e => setPassword(e.target.value)} />
           </FormControl>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -87,7 +111,15 @@ function SignInPage(props) {
 }
 
 SignInPage.propTypes = {
+  dispatch: PropTypes.func,
   classes: PropTypes.object,
+  auth: PropTypes.object,
 };
 
-export default withStyles(styles)(SignInPage);
+const mapStateToProps = (state) => (
+  {
+    auth: state.auth,
+  }
+)
+
+export default connect(mapStateToProps)(withStyles(styles)(SignInPage));
