@@ -1,6 +1,10 @@
 import * as Actions from './visits.actions';
 
-const visitReducer = (state = {}, action) => {
+const initialState = {
+  visits: [],
+}
+
+const visitsReducer = (state = initialState, action) => {
   let newState = state;
   switch (action.type) {
     case Actions.VISITS_LOADED:

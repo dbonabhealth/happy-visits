@@ -19,7 +19,7 @@ class VisitsPage extends Component {
 
 
 VisitsPage.propTypes = {
-  visit: PropTypes.array,
+  visit: PropTypes.object,
 };
 
 const mapStateToProps = (state) => (
