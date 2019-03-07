@@ -6,13 +6,15 @@ class VisitsPage extends Component {
   render() {
     const { visit } = this.props;
     return (
-      <ul>
+      <div className="container">
+      <ul className="visit">
         {visit.visits.map((item) => (
           <li key={item.id}>
             {item.label}
           </li>
         ))}
       </ul>
+      </div>
     );
   }
 }
